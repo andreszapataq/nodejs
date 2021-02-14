@@ -1,5 +1,8 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const app = express();
+
+dotenv.config();
 
 app.get('/', (req, res) => {
     res.send('HOLA PAPI!');
@@ -11,8 +14,8 @@ app.get('/tavo', (req, res) => {
 
 app.listen(process.env.PORT || 5000);
 
-var accountSid = 'AC693760bad6b60e903146528efad22f04'; // Your Account SID from www.twilio.com/console
-var authToken = '2a6fa60c649492ae7bb1538f8998449b';   // Your Auth Token from www.twilio.com/console
+const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
+const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
 
 const twilio = require('twilio');
 const client = new twilio(accountSid, authToken);
