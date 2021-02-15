@@ -14,8 +14,8 @@ app.get('/tavo', (req, res) => {
 
 app.get('/twilio', (req, res) => {
     client.messages.create({
-        body: 'TWILIO SMS FROM AWS!',
-        to: '+573113559747',  // Text this number +12345678901
+        body: 'HOLA TAVO FROM AWS!',
+        to: '+447474559939',  // Text this number +12345678901
         from: '+13347216403' // From a valid Twilio number
     })
     .then((message) => console.log(message.sid));
