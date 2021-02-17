@@ -12,7 +12,7 @@ app.get('/tavo', (req, res) => {
     res.send('HOLA PAPI 2!');
 });
 
-const numbers = ['+573113559747', '+573136299410'];
+const numbers = process.env.NUMBERS.split(' ');
 
 app.get('/twilio', (req, res) => {
     Promise.all(
