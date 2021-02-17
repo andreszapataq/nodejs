@@ -12,12 +12,18 @@ app.get('/tavo', (req, res) => {
     res.send('HOLA PAPI 2!');
 });
 
+const numbers = ['+573113559747', '+573136299410'];
+
 app.get('/twilio', (req, res) => {
-    client.messages.create({
-        body: 'TWILIO SMS FROM AWS!',
-        to: '+573113559747',  // Text this number +12345678901
-        from: '+13347216403' // From a valid Twilio number
-    })
+    Promise.all(
+        numbers.map(number => {
+            return client.messages.create({
+                body: 'TWILIO BULK SMS FROM AWS!',
+                to: number,  // Text this number +12345678901
+                from: '+13347216403' // From a valid Twilio number
+            });
+        })
+    )
     .then((message) => console.log(message.sid));
 
     res.send('SMS ENVIADO!');
