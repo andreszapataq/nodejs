@@ -21,11 +21,15 @@ app.get('/twilio', (req, res) => {
                 body: 'TWILIO BULK SMS FROM AWS!',
                 to: number,  // Text this number +12345678901
                 from: '+13347216403' // From a valid Twilio number
-            });
+            })
+            .then((message) => console.log(message.sid));
         })
     )
-    .then((message) => console.log(message.sid));
-
+    .then(messages => {
+        console.log('Mensaje enviado!');
+    })
+    .catch(err => console.error(err));
+    
     res.send('SMS ENVIADO!');
 });
 
