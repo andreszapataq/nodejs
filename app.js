@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const app = express();
 
 dotenv.config();
@@ -40,5 +41,15 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.t
 
 const twilio = require('twilio');
 const client = new twilio(accountSid, authToken);
+
+const DB = process.env.DB_URI;
+
+mongoose.connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+}).then(() => {
+    console.log('CONECTADO A DB PAPI!');
+}).catch(err => console.log('MI ERROR: ' + err));
 
 module.exports = app;
