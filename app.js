@@ -1,10 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
+const ventasRouter = require('./routes/ventasRoutes');
 const app = express();
 
 dotenv.config();
 
+app.use(cors());
+app.use(express.json());
+
+
+// RUTAS
 app.get('/', (req, res) => {
     res.send('HOLA PAPI!');
 });
@@ -13,6 +19,10 @@ app.get('/tavo', (req, res) => {
     res.send('HOLA PAPI 2!');
 });
 
+app.use('/ventas', ventasRouter);
+
+
+// TWILIO
 const numbers = process.env.NUMBERS.split(' ');
 
 app.get('/twilio', (req, res) => {
@@ -34,22 +44,10 @@ app.get('/twilio', (req, res) => {
     res.send('SMS ENVIADO!');
 });
 
-app.listen(process.env.PORT || 5000);
-
 const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
 const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
 
 const twilio = require('twilio');
 const client = new twilio(accountSid, authToken);
-
-const DB = process.env.DB_URI;
-
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-}).then(() => {
-    console.log('CONECTADO A DB PAPI!');
-}).catch(err => console.log('MI ERROR: ' + err));
 
 module.exports = app;
