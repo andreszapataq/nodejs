@@ -1,2 +1,2 @@
-# Node.js/Twilio/AWS
+# Node.js / Twilio / AWS
 AWS Node.js Deploy
