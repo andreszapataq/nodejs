@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ventaSchema = new mongoose.Schema({
     cliente: String,
     telefono: String,
-    articulos: [Object]
+    compras: Array
 });
 
 const Ventas = mongoose.model('Venta', ventaSchema);
