@@ -4,15 +4,11 @@ const twilio = require('twilio');
 exports.getVentas = async (req, res) => {
     const venta = await Ventas.find(); // TRY FINDONE
 
-    console.log(venta);
-
     // const {compras, username, telefono} = venta; TRY THIS
     
-    const compras = venta[0].compras;
-
     const tel = venta[0].telefono;
-
-    console.log(tel);
+    
+    const compras = venta[0].compras;
 
     let min = Math.min(...compras.map(item => item.cantidad));
 
@@ -22,14 +18,25 @@ exports.getVentas = async (req, res) => {
 
 
     // TWILIO
-    const numbers = process.env.NUMBERS.split(' ');
+    // const numbers = process.env.NUMBERS.split(' ');
 
     const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
     const authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
     
     const client = new twilio(accountSid, authToken);
 
-    const twilio2 = async (req, res) => {
+    const twilio2 = async () => {
+        await client.messages.create({
+                    body: `Compra ${menorCompra} este mes con 30% de descuento. Oferta valida solo para ti!`,
+                    to: tel,  // Text this number +12345678901
+                    from: '+13347216403' // From a valid Twilio number
+                })
+                .then(message => console.log(message.sid));
+
+        // res.send('SMS ENVIADO!');
+    }
+
+    /* const twilio2 = async (req, res) => {
         await Promise.all(
             numbers.map(number => {
                 return client.messages.create({
@@ -46,9 +53,9 @@ exports.getVentas = async (req, res) => {
         .catch(err => console.error(err));
         
         // res.send('SMS ENVIADO!');
-    };
+    }; */
 
-    twilio2();
+    // twilio2();
 
     /* let menor;
     let zero = compras[0].cantidad + 1;
