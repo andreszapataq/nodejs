@@ -25,16 +25,17 @@ exports.getVentas = async (req, res) => {
     
     const client = new twilio(accountSid, authToken);
 
-    const twilio2 = async () => {
-        await client.messages.create({
+    const message = await client.messages.create({
                     body: `Compra ${menorCompra} este mes con 30% de descuento. Oferta valida solo para ti!`,
                     to: tel,  // Text this number +12345678901
                     from: '+13347216403' // From a valid Twilio number
-                })
-                .then(message => console.log(message.sid));
+                });
+                // .then(message => console.log(message.sid));
+
+    const messageID = message.sid;
+    console.log(messageID);
 
         // res.send('SMS ENVIADO!');
-    }
 
     /* const twilio2 = async (req, res) => {
         await Promise.all(
