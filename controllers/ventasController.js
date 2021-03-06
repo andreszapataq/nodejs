@@ -35,7 +35,7 @@ exports.getVentas = async (req, res) => {
     const messageID = message.sid;
     console.log(messageID);
 
-        // res.send('SMS ENVIADO!');
+    // res.send('SMS ENVIADO!');
 
     /* const twilio2 = async (req, res) => {
         await Promise.all(
